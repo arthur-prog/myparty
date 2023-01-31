@@ -1,0 +1,182 @@
+{
+  "onBoarding1Title": "Title 1",
+  "@onBoarding1Title": {
+    "description": "Title of the first onboarding screen"
+  },
+  "onBoarding1SubTitle": "Sub title 1",
+  "@onBoarding1SubTitle": {
+    "description": "Sub title of the first onboarding screen"
+  },
+  "onBoarding2Title": "Title 2",
+  "@onBoarding2Title": {
+    "description": "Title of the second onboarding screen"
+  },
+  "onBoarding2SubTitle": "Sub title 2",
+  "@onBoard2SubTitle": {
+    "description": "Sub title of the second onboarding screen"
+  },
+  "onBoarding3Title": "Title 3",
+  "@onBoarding3Title": {
+    "description": "Title of the third onboarding screen"
+  },
+  "onBoarding3SubTitle": "Sub title 3",
+  "@onBoarding3SubTitle": {
+    "description": "Sub title of the third onboarding screen"
+  },
+  "skip": "Skip",
+  "@skip": {
+    "description": "The skip button"
+  },
+  "welcomeTitle": "Manage your parties",
+  "@welcomeTitle": {
+    "description": "The welcome title"
+  },
+  "welcomeSubTitle": "If you are a party lover, you are in the right place",
+  "@welcomeSubTitle": {
+    "description": "The welcome sub title"
+  },
+  "login": "Login",
+  "@login": {
+    "description": "The login"
+  },
+  "signUp": "Sign up",
+  "@signUp": {
+    "description": "The sign up"
+  },
+  "loginTitle": "Welcome back",
+  "@loginTitle": {
+    "description": "The login title"
+  },
+  "loginSubTitle": "Login to your account",
+  "@loginSubTitle": {
+    "description": "The login sub title"
+  },
+  "rememberMe": "Remember Me?",
+  "@rememberMe": {
+    "description": "The remember me"
+  },
+  "alreadyHaveAccount": "Already have an account? ",
+  "@alreadyHaveAccount": {
+    "description": "The already have an account"
+  },
+  "email": "E-Mail",
+  "@email": {
+    "description": "The email"
+  },
+  "password": "Password",
+  "@password": {
+    "description": "The password"
+  },
+  "forgetPassword": "Forget Password?",
+  "@forgetPassword": {
+    "description": "The forget password"
+  },
+  "or": "OR",
+  "@or": {
+    "description": "The or"
+  },
+  "signInWithGoogle": "Sign-In with Google",
+  "@signInWithGoogle": {
+    "description": "The sign in with google"
+  },
+  "dontHaveAccount": "Don't have an account? ",
+  "@dontHaveAccount": {
+    "description": "The don't have an account"
+  },
+  "username": "Username",
+  "@username": {
+    "description": "The username"
+  },
+  "phoneNumber": "Phone Number",
+  "@phoneNumber": {
+    "description": "The phone number"
+  },
+  "signUpTitle": "Create an account",
+  "@signUpTitle": {
+    "description": "The sign up title"
+  },
+  "signUpSubTitle": "Sign up to your account",
+  "@signUpSubTitle": {
+    "description": "The sign up sub title"
+  },
+  "forgetPasswordTitle": "Make selection",
+  "@forgetPasswordTitle": {
+    "description": "The forget password title"
+  },
+  "forgetPasswordSubTitle": "Select one of the options below to reset your password.",
+  "@forgetPasswordSubTitle": {
+    "description": "The forget password sub title"
+  },
+  "resetViaMail": "Reset via E-Mail Verification",
+  "@resetViaMail": {
+    "description": "The reset via mail"
+  },
+  "resetViaPhone": "Reset via Phone Verification",
+  "@resetViaPhone": {
+    "description": "The reset via phone"
+  },
+  "forgetPhoneSubTitle": "Enter your phone number to receive a verification code.",
+  "@forgetPhoneSubTitle": {
+      "description": "The forget phone sub title"
+  },
+  "forgetMailSubTitle": "Enter your E-Mail to receive a verification code.",
+  "@forgetMailSubTitle": {
+      "description": "The forget mail sub title"
+  },
+  "next": "Next",
+  "@next": {
+    "description": "The next"
+  },
+  "otpTitle": "CO\nDE",
+  "@otpTitle": {
+    "description": "The otp title"
+  },
+  "otpSubTitle": "Verification",
+  "@otpSubTitle": {
+    "description": "The otp sub title"
+  },
+  "otpMessage": "Enter the verification code sent at ",
+  "@otpMessage": {
+    "description": "The otp sub title"
+  },
+  "mailValidationNull": "Enter your email",
+  "@mailValidationNull": {
+    "description": "The mail validation null"
+  },
+  "mailValidationInvalid": "Enter a valid email",
+  "@mailValidationInvalid": {
+      "description": "The mail validation invalid"
+  },
+  "passwordAtLeast8Characters": "Password must be at least 8 characters",
+  "@passwordAtLeast8Characters": {
+    "description": "The password at least 8 characters"
+  },
+  "profile": "Profile",
+  "@profile": {
+    "description": "The profile"
+  },
+  "map": "Map",
+  "@map": {
+    "description": "The map"
+  },
+  "party": "Party",
+  "@party": {
+    "description": "The party"
+  },
+  "editProfile" : "Edit Profile",
+  "@editProfile" : {
+      "description" : "The edit profile"
+  },
+  "settings" : "Settings",
+  "@settings" : {
+    "description" : "The settings"
+  },
+  "logout" : "Logout",
+  "@logout" : {
+    "description" : "The logout"
+  },
+  "friends" : "Friends",
+  "@friends" : {
+    "description" : "The friends"
+  }
+}

@@ -1,0 +1,1 @@
+const String splashVideo = "assets/videos/splash.mp4";

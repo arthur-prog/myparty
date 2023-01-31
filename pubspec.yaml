@@ -1,0 +1,66 @@
+name: my_party
+description: A nice application.
+
+publish_to: 'none' 
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=2.18.2 <3.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.2
+  firebase_core: ^2.1.1
+  firebase_auth: ^4.1.1
+  google_sign_in: ^5.4.2
+  firebase_ui_auth: ^1.0.4
+  firebase_ui_oauth_google: ^1.0.4
+  cloud_firestore: ^4.0.4
+  cloud_firestore_odm: ^1.0.0-dev.40
+  json_annotation: ^4.7.0
+  image_picker: ^0.8.6
+  firebase_storage: ^11.0.6
+  image_cropper: ^3.0.1
+  intl: ^0.17.0
+  flutter_polyline_points: ^1.0.0
+  flutter_svg: ^1.1.6
+  google_maps_flutter: ^2.2.2
+  geolocator: ^9.0.2
+  flutter_spinkit: ^5.1.0
+  line_awesome_flutter: ^2.0.0
+  google_fonts: ^3.0.1
+  flutter_native_splash: ^2.2.17
+  video_player: ^2.4.10
+  get: ^4.6.5
+  liquid_swipe: ^3.0.0
+  smooth_page_indicator: ^1.0.0+2
+  flutter_otp_text_field: ^1.1.1
+  email_validator: ^2.1.17
+  flutter_config: ^2.0.0
+
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^2.0.0
+  build_runner: ^2.3.2
+  cloud_firestore_odm_generator: ^1.0.0-dev.40
+  json_serializable: ^6.5.4
+
+flutter:
+  generate: true
+  uses-material-design: true
+  assets:
+    - assets/images/
+    - assets/images/on_boarding_images/
+    - assets/images/splash_images/
+    - assets/images/welcome_images/
+    - assets/videos/
+    - assets/logo/
+    - .env
