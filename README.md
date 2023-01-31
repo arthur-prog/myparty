@@ -1,16 +1,26 @@
-# my_party
+# MyParty
 
-A new Flutter project.
+A Flutter / Firebase app where you can create, join and manage parties.
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+Create a `.env` file in the root of the project.
 
-A few resources to get you started if this is your first Flutter project:
+```
+GOOGLE_MAPS_API_KEY="YOUR_API_KEY"
+```
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+If you don't have a Google api key, in the file `lib/src/features/screens/home/home_screen.dart` at line 75, you can replace 
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+
+```
+const MapScreen(),
+```
+
+by
+
+```
+const Scaffold(),
+```
+
+## This app hasn't already been tested on iOS!
