@@ -178,5 +178,53 @@
   "friends" : "Friends",
   "@friends" : {
     "description" : "The friends"
+  },
+  "usernameNotAvailable" : "Username not available",
+  "@usernameNotAvailable" : {
+      "description" : "The username not available"
+  },
+  "success" : "Success",
+  "@success" : {
+      "description" : "The success"
+  },
+  "error" : "Error",
+  "@error" : {
+      "description" : "The error"
+  },
+  "createdAccount" : "Your account has been created successfully.",
+  "@createdAccount" : {
+    "description" : "The created account"
+  },
+  "somethingWentWrong" : "Something went wrong. Try again.",
+  "@somethingWentWrong" : {
+    "description" : "The something went wrong"
+  },
+  "firstName" : "First Name",
+  "@firstName" : {
+      "description" : "The first name"
+  },
+  "lastName" : "Last Name",
+  "@lastName" : {
+    "description" : "The last name"
+  },
+  "birthdate" : "Birthdate",
+  "@birthdate" : {
+    "description" : "The birthdate"
+  },
+  "memberSince" : "Member since",
+  "@memberSince" : {
+    "description" : "The member since"
+  },
+  "delete" : "Delete",
+  "@delete" : {
+      "description" : "The delete"
+  },
+  "updatedAccount" : "Your informations has been modified successfully.",
+  "@updatedAccount" : {
+    "description" : "The updated account"
+  },
+  "friendRequestSent" : "The friend request has been sent successfully.",
+  "@friendRequestSent" : {
+    "description" : "The friend request sent"
   }
 }

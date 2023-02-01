@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:my_party/src/features/screens/party/party_screen.dart';
 import 'package:my_party/src/features/screens/map/map_screen.dart';
 import 'package:my_party/src/features/screens/profile/profile.dart';
@@ -21,7 +22,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   late Widget childWidget;
 
-  dynamic _scrollPhysics = ScrollPhysics();
+  dynamic _scrollPhysics = const ScrollPhysics();
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +34,7 @@ class _HomeScreenState extends State<HomeScreen> {
           onTap: (value) {
             currentIndex = value;
             _pageController.animateToPage(value,
-                duration: Duration(milliseconds: 300),
+                duration: Duration(milliseconds: 200),
                 curve: Curves.linear);
             if (value == 1){
               _scrollPhysics = NeverScrollableScrollPhysics();
@@ -44,15 +45,15 @@ class _HomeScreenState extends State<HomeScreen> {
           },
           items: [
             BottomNavigationBarItem(
-              icon: const Icon(Icons.party_mode),
+              icon: const Icon(Icons.party_mode_outlined),
               label: AppLocalizations.of(context)!.party,
             ),
             BottomNavigationBarItem(
-              icon: const Icon(Icons.map),
+              icon: const Icon(Icons.map_outlined),
               label: AppLocalizations.of(context)!.map,
             ),
             BottomNavigationBarItem(
-              icon: const Icon(Icons.person),
+              icon: const Icon(Icons.person_outline_outlined),
               label: AppLocalizations.of(context)!.profile,
             ),
           ],

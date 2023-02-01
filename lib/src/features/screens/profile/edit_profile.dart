@@ -1,20 +1,18 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
-import 'package:image_cropper/image_cropper.dart';
 import 'package:intl/intl.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:my_party/src/constants/colors.dart';
 import 'package:my_party/src/constants/image_strings.dart';
 import 'package:my_party/src/features/Entities/User.dart' as U;
 import 'package:image_picker/image_picker.dart';
-import 'dart:io';
-import 'package:firebase_storage/firebase_storage.dart';
 
 import 'package:my_party/src/common_widgets/re_usable_select_photo_button.dart';
+import 'package:my_party/src/features/controllers/profile/edit_profile_controller.dart';
 import 'package:my_party/src/repository/authentication_repository/authentication_repository.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:my_party/src/repository/user_repository/user_repository.dart';
 
 class EditProfile extends StatefulWidget {
   const EditProfile({Key? key}) : super(key: key);
@@ -25,80 +23,8 @@ class EditProfile extends StatefulWidget {
 
 class _EditProfileState extends State<EditProfile> {
   final _auth = Get.put(AuthenticationRepository());
-
-  final TextEditingController _usernameController = TextEditingController();
-  final TextEditingController _firstNameController = TextEditingController();
-  final TextEditingController _lastNameController = TextEditingController();
-  final TextEditingController _dateController = TextEditingController();
-
-  File? _image;
-
-  final _profilPictureRef =
-      FirebaseStorage.instance.ref().child('profile_picture');
-
-  String _userError = "";
-  Map<String, bool> _errors = {};
-
-  Future<void> _storeImage(String userId) async {
-    final idProfilPictureRef = _profilPictureRef.child(userId);
-    try {
-      await idProfilPictureRef.putFile(_image!);
-    } catch (e) {
-      print("_storeImage error: $e");
-    }
-  }
-
-  Future<void> _pickImage(ImageSource source) async {
-    try {
-      final image = await ImagePicker().pickImage(source: source);
-      if (image == null) return;
-      File? img = File(image.path);
-      img = await _cropImage(imageFile: img);
-      setState(() {
-        _image = img;
-      });
-    } on PlatformException catch (e) {
-      print(e);
-      Navigator.of(context).pop();
-    }
-  }
-
-  Future<File?> _cropImage({required File imageFile}) async {
-    CroppedFile? croppedImage =
-        await ImageCropper().cropImage(sourcePath: imageFile.path);
-    if (croppedImage == null) return null;
-    return File(croppedImage.path);
-  }
-
-  void displayUserError(bool isUserNameAvailable) {
-    setState(() {
-      _userError = "";
-    });
-    _errors["username"] = false;
-    if (_usernameController.text != '') {
-      if (!isUserNameAvailable) {
-        setState(() {
-          _userError = "This username is already used.";
-        });
-        _errors["username"] = true;
-      }
-    } else {
-      setState(() {
-        _userError = "You have to choose a username.";
-      });
-      _errors["username"] = true;
-    }
-  }
-
-  bool checkUserErrors() {
-    bool result = true;
-    _errors.forEach((key, value) {
-      if (value == true) {
-        result = false;
-      }
-    });
-    return result;
-  }
+  final _userRepo = Get.put(UserRepository());
+  final controller = Get.put(EditProfileController());
 
   @override
   Widget build(BuildContext context) {
@@ -120,186 +46,192 @@ class _EditProfileState extends State<EditProfile> {
         centerTitle: true,
       ),
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Container(
-            child: Column(
-              children: <Widget>[
-                // Stack(
-                //   children: [
-                //     SizedBox(
-                //       width: 120,
-                //       height: 120,
-                //       child: FutureBuilder<String>(
-                //           future: U.User.getProfilPicture(_user?.uid ?? ""),
-                //           builder: (BuildContext context,
-                //               AsyncSnapshot<String> snapshot) {
-                //             if (snapshot.hasData) {
-                //               return CircleAvatar(
-                //                 backgroundImage: NetworkImage(snapshot.data!),
-                //                 radius: 60.0,
-                //               );
-                //             }
-                //             return const CircleAvatar(
-                //               backgroundImage: NetworkImage(profilePicture),
-                //               radius: 60.0,
-                //             );
-                //           }),
-                //     ),
-                //     Positioned(
-                //       bottom: 0,
-                //       right: 0,
-                //       child: Container(
-                //         width: 35,
-                //         height: 35,
-                //         decoration: BoxDecoration(
-                //             borderRadius: BorderRadius.circular(100),
-                //             color: primaryColor),
-                //         child: Icon(
-                //           LineAwesomeIcons.camera,
-                //           color: isDark ? darkColor : lightColor,
-                //           size: 20,
-                //         ),
-                //       ),
-                //     )
-                //   ],
-                // ),
-                Center(
-                    child: _image == null
-                        ? const CircleAvatar(
-                      radius: 100,
-                      backgroundColor: Colors.white,
-                      backgroundImage: NetworkImage('https://shop.prestige-distribution.fr/web/image/product.template/15336/image_1024?unique=2c4e4bd'),
-                    )
-                        : CircleAvatar(
-                      radius: 100,
-                      backgroundImage: FileImage(_image!),
-                    )
-                ),
-
-                const SizedBox(height: 20),
-
-                SelectPhoto(
-                  onTap: () {
-                    _pickImage(ImageSource.gallery);
-                  },
-                  icon: Icons.image,
-                  textLabel: 'Browse Gallery',
-                ),
-
-                const SizedBox(height: 20),
-
-                SelectPhoto(
-                  onTap: () {
-                    _pickImage(ImageSource.camera);
-                  },
-                  icon: Icons.camera_alt_outlined,
-                  textLabel: 'Use a Camera',
-                ),
-
-                const SizedBox(height: 50),
-
-                Form(
-                  child: Column(
-                    children: [],
-                  ),
-                ),
-
-                SizedBox(height: 20),
-
-                TextField(
-                  controller: _usernameController,
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'Username',
-                  ),
-                  onChanged: (content) async {
-                    displayUserError(await U.User.isUserNameAvailable(content));
-                  },
-                ),
-
-                Text(
-                  _userError,
-                  style: TextStyle(
-                    color: Colors.red,
-                  ),
-                ),
-
-                const SizedBox(height: 5),
-
-                TextField(
-                  controller: _firstNameController,
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'First Name',
-                  ),
-                ),
-
-                const SizedBox(height: 20),
-
-                TextField(
-                  controller: _lastNameController,
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'Last Name',
-                  ),
-                ),
-
-                const SizedBox(height: 20),
-
-                TextField(
-                    controller: _dateController,
-                    //editing controller of this TextField
-                    decoration: const InputDecoration(
-                        icon: Icon(Icons.calendar_today),
-                        labelText: "Enter Date"),
-                    readOnly: true,
-                    // when true user cannot edit text
-                    onTap: () async {
-                      DateTime? pickedDate = await showDatePicker(
-                          context: context,
-                          initialDate: DateTime(2000),
-                          firstDate: DateTime(1920),
-                          lastDate: DateTime(2101));
-                      if (pickedDate != null) {
-                        String formattedDate =
-                            DateFormat('yyyy-MM-dd').format(pickedDate);
-                        setState(() {
-                          _dateController.text = formattedDate;
-                        });
-                      } else {
-                        print("Date is not selected");
-                      }
-                    }),
-
-                const SizedBox(height: 20),
-
-                ElevatedButton(
-                  onPressed: () async {
-                    if (checkUserErrors()) {
-                      _storeImage(_user!.uid);
-                      U.User user = U.User(
-                        userName: _usernameController.text,
-                        email: _user.email!,
-                        userId: _user.uid,
-                        birthDate: _dateController.text,
-                        firstName: _firstNameController.text,
-                        lastName: _lastNameController.text,
+        child: Center(
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(30, 0, 30, 30),
+              child: FutureBuilder(
+                future: _userRepo.getUserById(_auth.firebaseUser.value!.uid),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.done) {
+                    if (snapshot.hasData) {
+                      U.User user = snapshot.data as U.User;
+                      controller.birthDate.text = user.birthDate ?? "";
+                      controller.firstName.text = user.firstName ?? "";
+                      controller.lastName.text = user.lastName ?? "";
+                      return Column(
+                        children: <Widget>[
+                          Stack(
+                            children: [
+                              SizedBox(
+                                width: 150,
+                                height: 150,
+                                child: FutureBuilder<String>(
+                                    future: _userRepo
+                                        .getProfilPicture(_user?.uid ?? ""),
+                                    builder: (BuildContext context,
+                                        AsyncSnapshot<String> snapshot) {
+                                      if (snapshot.hasData) {
+                                        return Obx(
+                                          () => controller.image.value == null
+                                              ? CircleAvatar(
+                                                  radius: 100,
+                                                  backgroundColor: Colors.white,
+                                                  backgroundImage: NetworkImage(
+                                                      snapshot.data!),
+                                                )
+                                              : CircleAvatar(
+                                                  radius: 100,
+                                                  backgroundImage: FileImage(
+                                                      controller.image.value!),
+                                                ),
+                                        );
+                                      }
+                                      return const CircleAvatar(
+                                        backgroundImage:
+                                            NetworkImage(profilePicture),
+                                        radius: 60.0,
+                                      );
+                                    }),
+                              ),
+                              Positioned(
+                                bottom: 0,
+                                right: 0,
+                                child: Container(
+                                  width: 35,
+                                  height: 35,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(100),
+                                      color: primaryColor),
+                                  child: Icon(
+                                    LineAwesomeIcons.camera,
+                                    color: isDark ? darkColor : lightColor,
+                                    size: 20,
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                          const SizedBox(height: 30),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              SelectPhoto(
+                                  onTap: () {
+                                    controller.pickImage(ImageSource.gallery);
+                                  },
+                                  icon: Icons.image,
+                                  textLabel: 'Browse Gallery',
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.4),
+                              const SizedBox(width: 10),
+                              SelectPhoto(
+                                onTap: () {
+                                  controller.pickImage(ImageSource.camera);
+                                },
+                                icon: Icons.camera_alt_outlined,
+                                textLabel: 'Use a Camera',
+                                width: MediaQuery.of(context).size.width * 0.4,
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 20),
+                          const Divider(),
+                          const SizedBox(height: 10),
+                          Form(
+                            child: Column(
+                              children: [
+                                TextFormField(
+                                  controller: controller.firstName,
+                                  decoration: InputDecoration(
+                                    label: Text(AppLocalizations.of(context)!
+                                        .firstName),
+                                  ),
+                                ),
+                                const SizedBox(height: 10),
+                                TextFormField(
+                                  controller: controller.lastName,
+                                  decoration: InputDecoration(
+                                    label: Text(
+                                        AppLocalizations.of(context)!.lastName),
+                                  ),
+                                ),
+                                const SizedBox(height: 10),
+                                TextFormField(
+                                  controller: controller.birthDate,
+                                  decoration: InputDecoration(
+                                    prefixIcon:
+                                        const Icon(Icons.calendar_today),
+                                    labelText:
+                                        AppLocalizations.of(context)!.birthdate,
+                                  ),
+                                  readOnly: true,
+                                  onTap: controller.selectDate,
+                                ),
+                                const SizedBox(height: 30),
+                                SizedBox(
+                                  width: double.infinity,
+                                  child: ElevatedButton(
+                                    onPressed: () =>
+                                        controller.updateUser(user),
+                                    child: Text(AppLocalizations.of(context)!
+                                        .editProfile),
+                                  ),
+                                ),
+                                const SizedBox(height: 30),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text.rich(TextSpan(
+                                        text:
+                                            "${AppLocalizations.of(context)!.memberSince} ",
+                                        children: [
+                                          TextSpan(
+                                              text: _user != null
+                                                  ? DateFormat.yMd().format(
+                                                      _user.metadata
+                                                          .creationTime!)
+                                                  : AppLocalizations.of(
+                                                          context)!
+                                                      .error,
+                                              style: const TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 12))
+                                        ])),
+                                    ElevatedButton(
+                                        onPressed: () {},
+                                        style: ElevatedButton.styleFrom(
+                                            backgroundColor: Colors.redAccent
+                                                .withOpacity(0.2),
+                                            elevation: 0,
+                                            foregroundColor: Colors.red,
+                                            side: BorderSide.none),
+                                        child: Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 8.0),
+                                          child: Text(
+                                              AppLocalizations.of(context)!
+                                                  .delete),
+                                        ))
+                                  ],
+                                )
+                              ],
+                            ),
+                          ),
+                        ],
                       );
-                      await user.addUser();
-                      // Navigator.push(
-                      //   context,
-                      //   MaterialPageRoute(builder: (context) => LandingPage()),
-                      // );
+                    } else if (snapshot.hasError) {
+                      return Center(child: Text(snapshot.error.toString()));
                     } else {
-                      //everything not valid
-                      print("errors");
+                      return const Center(child: Text('Something went wrong'));
                     }
-                  },
-                  child: const Text(
-                    "Validate",
-                  ),
-                ),
-              ],
+                  } else {
+                    return const Center(
+                        child: SpinKitFadingCube(color: primaryColor));
+                  }
+                },
+              ),
             ),
           ),
         ),

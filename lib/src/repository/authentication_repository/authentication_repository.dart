@@ -1,14 +1,18 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:my_party/src/features/screens/home/home_screen.dart';
 import 'package:my_party/src/features/screens/profile/profile.dart';
 import 'package:my_party/src/repository/authentication_repository/exceptions/signup_email_password_failure.dart';
 import 'package:my_party/src/features/screens/welcome/welcome.dart';
+import 'package:my_party/src/features/Entities/User.dart' as U;
+import 'package:my_party/src/repository/user_repository/user_repository.dart';
 
 class AuthenticationRepository extends GetxController {
   static AuthenticationRepository get instance => Get.find();
 
+  final _userRepo = Get.put(UserRepository());
   final _auth = FirebaseAuth.instance;
   late Rx<User?> firebaseUser;
 
@@ -24,10 +28,15 @@ class AuthenticationRepository extends GetxController {
         .offAll(() => const HomeScreen());
   }
 
-  void createUserWithEmailandPassword(String email, String password) async {
+  void createUserWithEmailandPassword(String email, String password, String username) async {
     try {
-      await _auth.createUserWithEmailAndPassword(
+      UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
+      U.User user = U.User(
+          email: email,
+          userName: username,
+          userId: userCredential.user!.uid);
+      _userRepo.addUser(user);
       // firebaseUser.value?.sendEmailVerification();
       firebaseUser.value == null ? Get.offAll(() => const WelcomeScreen()) : Get
           .offAll(() => const HomeScreen());

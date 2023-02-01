@@ -8,6 +8,7 @@ import 'package:my_party/src/features/Entities/User.dart' as U;
 import 'package:my_party/src/features/screens/friends/add_friend.dart';
 import 'package:my_party/src/features/screens/friends/friend_requests.dart';
 import 'package:my_party/src/repository/authentication_repository/authentication_repository.dart';
+import 'package:my_party/src/repository/user_repository/user_repository.dart';
 
 class Friends extends StatefulWidget {
   const Friends({
@@ -24,6 +25,7 @@ class _FriendsState extends State<Friends> {
   @override
   Widget build(BuildContext context) {
 
+    final _userRepo = Get.put(UserRepository());
     final _auth = Get.put(AuthenticationRepository());
     final _user = _auth.firebaseUser.value;
 
@@ -52,9 +54,9 @@ class _FriendsState extends State<Friends> {
                                 TextButton(
                                     onPressed: () async {
                                       if(_user != null){
-                                        final U.User? thisUser = await U.User.getUserById(_user.uid);
-                                        await thisUser!.deleteFriend(user);
-                                        await thisUser.deleteFriendBack(user);
+                                        final U.User? thisUser = await _userRepo.getUserById(_user.uid);
+                                        await _userRepo.deleteFriend(user, thisUser!);
+                                        await _userRepo.deleteFriendBack(user, thisUser);
                                       } else {
                                         throw Exception("User is null");
                                       }

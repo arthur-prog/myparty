@@ -1,8 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:my_party/src/features/Entities/Party.dart';
 
 import 'package:my_party/src/features/Entities/User.dart' as U;
+import 'package:my_party/src/repository/user_repository/user_repository.dart';
 
 class AddParty extends StatefulWidget {
   const AddParty({
@@ -20,6 +22,7 @@ class _AddPartyState extends State<AddParty> {
 
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _guestController = TextEditingController();
+  final _userRepo = Get.put(UserRepository());
 
   List<String> guests = [];
 
@@ -68,7 +71,7 @@ class _AddPartyState extends State<AddParty> {
               ),
               TextButton(
                 onPressed: () async {
-                  U.User? user = await U.User.getUserByUsername(_guestController.text);
+                  U.User? user = await _userRepo.getUserByUsername(_guestController.text);
                   setState(() {
                     guests.add(user!.userId);
                   });

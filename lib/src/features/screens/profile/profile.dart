@@ -9,7 +9,8 @@ import 'package:my_party/src/features/screens/friends/friends.dart';
 import 'package:my_party/src/features/screens/profile/edit_profile.dart';
 import 'package:my_party/src/features/screens/profile/widgets/profile_menu.dart';
 import 'package:my_party/src/repository/authentication_repository/authentication_repository.dart';
-import 'package:my_party/src/features/Entities/User.dart';
+import 'package:my_party/src/features/Entities/User.dart' as U;
+import 'package:my_party/src/repository/user_repository/user_repository.dart';
 
 class Profile extends StatefulWidget {
   Profile({
@@ -22,10 +23,10 @@ class Profile extends StatefulWidget {
 
 class _ProfileState extends State<Profile> {
   final _authRepo = Get.put(AuthenticationRepository());
+  final _userRepo = Get.put(UserRepository());
 
   @override
   Widget build(BuildContext context) {
-
     bool isDark = Theme.of(context).brightness == Brightness.dark;
     final _user = _authRepo.firebaseUser.value;
 
@@ -58,10 +59,9 @@ class _ProfileState extends State<Profile> {
                     width: 120,
                     height: 120,
                     child: FutureBuilder<String>(
-                        future: User.getProfilPicture(
-                            _user?.uid ?? ""),
-                        builder:
-                            (BuildContext context, AsyncSnapshot<String> snapshot) {
+                        future: _userRepo.getProfilPicture(_user?.uid ?? ""),
+                        builder: (BuildContext context,
+                            AsyncSnapshot<String> snapshot) {
                           if (snapshot.hasData) {
                             return CircleAvatar(
                               backgroundImage: NetworkImage(snapshot.data!),
@@ -93,17 +93,42 @@ class _ProfileState extends State<Profile> {
                 ],
               ),
               const SizedBox(height: 10),
-              // Text(
-              //   'Username',
-              //   style: Theme.of(context).textTheme.headline4,
-              // ),
-              // Text(
-              //   _user?.email ?? '',
-              //   style: Theme.of(context).textTheme.bodyText2,
-              // ),
-              Text(
-                _user?.email ?? '',
-                style: Theme.of(context).textTheme.headline4,
+              FutureBuilder(
+                future: _userRepo.getUserById(_user!.uid),
+                builder: (BuildContext context, AsyncSnapshot<U.User?> snapshot) {
+                  if (snapshot.hasData) {
+                    U.User user = snapshot.data!;
+                    return Column(
+                      children: [
+                        Text(
+                          user.userName,
+                          style: Theme.of(context).textTheme.headline4,
+                        ),
+                        Text(
+                          user.email,
+                          style: Theme.of(context).textTheme.bodyText2,
+                        ),
+                        user.firstName != "" && user.lastName != ""
+                            ? Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                    user.firstName!,
+                                    style: Theme.of(context).textTheme.bodyText2,
+                                  ),
+                                const SizedBox(width: 8),
+                                Text(
+                                  user.lastName!,
+                                  style: Theme.of(context).textTheme.bodyText2,
+                                ),
+                              ],
+                            )
+                            : const SizedBox(),
+                      ],
+                    );
+                  }
+                  return const SizedBox();
+                },
               ),
               const SizedBox(height: 20),
               SizedBox(
@@ -120,7 +145,6 @@ class _ProfileState extends State<Profile> {
               const SizedBox(
                 height: 30,
               ),
-
               const Divider(),
               const SizedBox(
                 height: 10,

@@ -38,6 +38,7 @@ class SelectPhotoOptionsScreen extends StatelessWidget {
               onTap: onTap(ImageSource.gallery),
               icon: Icons.image,
               textLabel: 'Browse Gallery',
+              width: 200,
             ),
             const SizedBox(
               height: 10,
@@ -55,6 +56,7 @@ class SelectPhotoOptionsScreen extends StatelessWidget {
               onTap: onTap(ImageSource.camera),
               icon: Icons.camera_alt_outlined,
               textLabel: 'Use a Camera',
+              width: 200,
             ),
           ])
         ],

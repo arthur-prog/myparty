@@ -43,5 +43,17 @@
   "editProfile" : "Modifier le profil",
   "settings" : "Paramètres",
   "logout" : "Se déconnecter",
-  "friends" : "Amis"
+  "friends" : "Amis",
+  "usernameNotAvailable" : "Nom d'utilisateur non disponible",
+  "success" : "Parfait",
+  "error" : "Erreur",
+  "createdAccount" : "Votre compte a bien été créé",
+  "somethingWentWrong" : "Un problème est survenu. Veuillez réessayer.",
+  "firstName" : "Prénom",
+  "lastName" : "Nom",
+  "birthdate" : "Date de naissance",
+  "memberSince" : "Membre depuis le",
+  "delete" : "Supprimer",
+  "updatedAccount" : "Vos informations ont bien été mises à jour.",
+  "friendRequestSent" : "La demande d'ami a bien été envoyée."
 }

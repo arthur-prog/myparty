@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 
 import 'package:my_party/src/features/Entities/User.dart' as U;
 import 'package:my_party/src/repository/authentication_repository/authentication_repository.dart';
+import 'package:my_party/src/repository/user_repository/user_repository.dart';
 
 class FriendRequests extends StatefulWidget {
   const FriendRequests({
@@ -18,6 +19,7 @@ class FriendRequests extends StatefulWidget {
 
 class _FriendRequestsState extends State<FriendRequests> {
   final _auth = Get.put(AuthenticationRepository());
+  final _userRepo = Get.put(UserRepository());
 
   @override
   Widget build(BuildContext context) {
@@ -48,11 +50,11 @@ class _FriendRequestsState extends State<FriendRequests> {
                             onPressed: () async {
                               if (_user != null) {
                                 final U.User? thisUser =
-                                    await U.User.getUserById(_user.uid);
+                                    await _userRepo.getUserById(_user.uid);
 
-                                await thisUser!.addFriend(user);
-                                await thisUser!.addBackFriend(user);
-                                await thisUser!.deleteFriendRequest(user);
+                                await _userRepo.addFriend(user, thisUser!);
+                                await _userRepo.addBackFriend(user, thisUser);
+                                await _userRepo.deleteFriendRequest(user, thisUser);
                               } else {
                                 throw Exception("User is null");
                               }
@@ -62,8 +64,8 @@ class _FriendRequestsState extends State<FriendRequests> {
                             onPressed: () async {
                               if (_user != null) {
                                 final U.User? thisUser =
-                                    await U.User.getUserById(_user.uid);
-                                await thisUser!.deleteFriendRequest(user);
+                                    await _userRepo.getUserById(_user.uid);
+                                await _userRepo.deleteFriendRequest(user, thisUser!);
                               } else {
                                 throw Exception("User is null");
                               }
