@@ -170,6 +170,21 @@ class UserRepository extends GetxController {
     }
   }
 
+  Future<bool> isMailAvailable(String mail) async {
+    try {
+      QuerySnapshot<Object?> query =
+      await _usersCollection.where('email', isEqualTo: mail).get();
+      if (query.docs.isNotEmpty) {
+        return false;
+      } else {
+        return true;
+      }
+    } catch (e) {
+      print(e);
+      return false;
+    }
+  }
+
   Future<String> getProfilPicture(String id) async {
     return await FirebaseStorage.instance
         .ref()

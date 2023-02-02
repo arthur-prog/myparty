@@ -1,13 +1,17 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:my_party/src/common_widgets/snackbar/snackbar_information_widget.dart';
 import 'package:my_party/src/features/screens/home/home_screen.dart';
 import 'package:my_party/src/features/screens/profile/profile.dart';
+import 'package:my_party/src/repository/authentication_repository/exceptions/reset_password_mail_failure.dart';
+import 'package:my_party/src/repository/authentication_repository/exceptions/signin_credentials_failure.dart';
+import 'package:my_party/src/repository/authentication_repository/exceptions/signin_email_password_failure.dart';
 import 'package:my_party/src/repository/authentication_repository/exceptions/signup_email_password_failure.dart';
 import 'package:my_party/src/features/screens/welcome/welcome.dart';
 import 'package:my_party/src/features/Entities/User.dart' as U;
 import 'package:my_party/src/repository/user_repository/user_repository.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AuthenticationRepository extends GetxController {
   static AuthenticationRepository get instance => Get.find();
@@ -41,12 +45,19 @@ class AuthenticationRepository extends GetxController {
       firebaseUser.value == null ? Get.offAll(() => const WelcomeScreen()) : Get
           .offAll(() => const HomeScreen());
     } on FirebaseAuthException catch (e) {
-      final ex = SignUpWithEmailAndPasswordFailure(e.code);
-      Get.snackbar("Failed", ex.message);
+      final ex = SignUpWithEmailAndPasswordFailure.code(e.code);
+      SnackBarInformationWidget(
+        text: ex.message,
+        title: AppLocalizations.of(Get.context!)!.error,
+        type: "error",
+      );
     }
     catch (_) {
-      const ex = SignUpWithEmailAndPasswordFailure();
-      Get.snackbar("Failed", ex.message);
+      SnackBarInformationWidget(
+        text: AppLocalizations.of(Get.context!)!.somethingWentWrong,
+        title: AppLocalizations.of(Get.context!)!.error,
+        type: "error",
+      );
     }
   }
 
@@ -56,7 +67,18 @@ class AuthenticationRepository extends GetxController {
       firebaseUser.value == null ? Get.offAll(() => const WelcomeScreen()) : Get
           .offAll(() => Profile());
     } on FirebaseAuthException catch (e) {
-      Get.snackbar("Failed", e.message ?? e.code);
+      final ex = SignInWithEmailAndPasswordFailure.code(e.code);
+      SnackBarInformationWidget(
+        text: ex.message,
+        title: AppLocalizations.of(Get.context!)!.error,
+        type: "error",
+      );
+    } catch (_) {
+      SnackBarInformationWidget(
+        text: AppLocalizations.of(Get.context!)!.somethingWentWrong,
+        title: AppLocalizations.of(Get.context!)!.error,
+        type: "error",
+      );
     }
   }
 
@@ -73,16 +95,42 @@ class AuthenticationRepository extends GetxController {
       firebaseUser.value == null ? Get.offAll(() => const WelcomeScreen()) : Get
           .offAll(() => Profile());
     } on FirebaseAuthException catch (e) {
-      Get.snackbar("Failed", e.message ?? e.code);
+      final ex = SignInWithCredentialsFailure.code(e.code);
+      SnackBarInformationWidget(
+        text: ex.message,
+        title: AppLocalizations.of(Get.context!)!.error,
+        type: "error",
+      );
+    } catch (_) {
+      SnackBarInformationWidget(
+        text: AppLocalizations.of(Get.context!)!.somethingWentWrong,
+        title: AppLocalizations.of(Get.context!)!.error,
+        type: "error",
+      );
     }
   }
 
   void sendResetPasswordMail(String email) async {
     try {
       await _auth.sendPasswordResetEmail(email: email);
-      Get.snackbar("Succes", "Email sent");
-    } on Exception catch (e) {
-      Get.snackbar("Failed", e.toString());
+      SnackBarInformationWidget(
+        text: AppLocalizations.of(Get.context!)!.emailSent,
+        title: AppLocalizations.of(Get.context!)!.success,
+        type: "success",
+      );
+    } on FirebaseAuthException catch (e) {
+      final ex = ResetPasswordEmailFailure.code(e.code);
+      SnackBarInformationWidget(
+        text: ex.message,
+        title: AppLocalizations.of(Get.context!)!.error,
+        type: "error",
+      );
+    } catch (_) {
+      SnackBarInformationWidget(
+        text: AppLocalizations.of(Get.context!)!.somethingWentWrong,
+        title: AppLocalizations.of(Get.context!)!.error,
+        type: "error",
+      );
     }
   }
 

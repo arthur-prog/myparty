@@ -11,8 +11,8 @@ SnackbarController SnackBarInformationWidget({required String title, required St
       textColor = Colors.green;
       break;
     case 'error':
-      backgroundColor = Colors.green.withOpacity(0.1);
-      textColor = Colors.green;
+      backgroundColor = Colors.redAccent.withOpacity(0.1);
+      textColor = Colors.red;
       break;
     default:
       backgroundColor = Colors.green.withOpacity(0.1);
@@ -22,7 +22,7 @@ SnackbarController SnackBarInformationWidget({required String title, required St
   return Get.snackbar(
       title,
       text,
-      snackPosition: SnackPosition.BOTTOM,
+      snackPosition: SnackPosition.TOP,
       backgroundColor: backgroundColor,
       colorText: textColor
   );

@@ -21,37 +21,21 @@ class SignUpFormWidget extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            TextFormField(
-              controller: controller.username,
-              decoration: InputDecoration(
-                label: Text(
-                  AppLocalizations.of(context)!.username,
-                ),
-                prefixIcon: const Icon(LineAwesomeIcons.user),
-              ),
-              onChanged: (content) async {
-                await controller.validateUsername();
-              },
-            ),
-            Obx(() => controller.isUsernameAvailable.value || controller.username.text.isEmpty
-                ? const SizedBox(height: 10,)
-                : SizedBox(
-                  height: 25,
-                  child: Center(
-                    child: Text(
-                        AppLocalizations.of(context)!.usernameNotAvailable,
-                        style: const TextStyle(color: Colors.red),
-                      ),
+            Obx(
+              () => TextFormField(
+                controller: controller.username,
+                decoration: InputDecoration(
+                  errorText: controller.usernameError.value == ""
+                      ? null
+                      : controller.usernameError.value,
+                  label: Text(
+                    AppLocalizations.of(context)!.username,
                   ),
-                )),
-            TextFormField(
-              validator: (value) => controller.validateEmail(value!),
-              controller: controller.email,
-              decoration: InputDecoration(
-                label: Text(
-                  AppLocalizations.of(context)!.email,
+                  prefixIcon: const Icon(LineAwesomeIcons.user),
                 ),
-                prefixIcon: const Icon(Icons.email_outlined),
+                onChanged: (content) async {
+                  await controller.isUsernameAvailable();
+                },
               ),
             ),
             const SizedBox(
@@ -59,8 +43,28 @@ class SignUpFormWidget extends StatelessWidget {
             ),
             Obx(
               () => TextFormField(
-                validator: (value) =>
-                    controller.validatePassword(value!),
+                validator: (value) => controller.validateEmail(value!),
+                controller: controller.email,
+                decoration: InputDecoration(
+                  errorText: controller.mailError.value == ""
+                      ? null
+                      : controller.mailError.value,
+                  label: Text(
+                    AppLocalizations.of(context)!.email,
+                  ),
+                  prefixIcon: const Icon(Icons.email_outlined),
+                ),
+                onChanged: (content) async {
+                  await controller.isMailAvailable();
+                },
+              ),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Obx(
+              () => TextFormField(
+                validator: (value) => controller.validatePassword(value!),
                 controller: controller.password,
                 obscureText: controller.isPasswordNotVisible.value,
                 decoration: InputDecoration(
@@ -81,7 +85,10 @@ class SignUpFormWidget extends StatelessWidget {
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: () {
-                  if (_formKey.currentState!.validate() && controller.username.text.isNotEmpty) {
+                  if (_formKey.currentState!.validate() &&
+                      controller.username.text.isNotEmpty &&
+                      controller.mailError.value == "" &&
+                      controller.usernameError.value == "") {
                     SignUpController.instance.registerUser(
                         controller.email.text.trim(),
                         controller.password.text.trim());

@@ -1,3 +1,6 @@
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:get/get.dart';
+
 class SignUpWithEmailAndPasswordFailure {
   final String message;
 
@@ -6,17 +9,17 @@ class SignUpWithEmailAndPasswordFailure {
   factory SignUpWithEmailAndPasswordFailure.code(String code){
     switch(code){
       case 'weak-password':
-        return const SignUpWithEmailAndPasswordFailure('Please enter a stronger password.');
+        return SignUpWithEmailAndPasswordFailure(AppLocalizations.of(Get.context!)!.weakPasswordException);
       case 'invalid-email':
-        return const SignUpWithEmailAndPasswordFailure('Please enter a valid email address.');
+        return SignUpWithEmailAndPasswordFailure(AppLocalizations.of(Get.context!)!.invalidEmailException);
       case 'email-already-in-use':
-        return const SignUpWithEmailAndPasswordFailure('An account already exists for this email address.');
+        return SignUpWithEmailAndPasswordFailure(AppLocalizations.of(Get.context!)!.emailAlreadyInUseException);
       case 'operation-not-allowed':
-        return const SignUpWithEmailAndPasswordFailure('Operation not allowed. Please contact support.');
+        return SignUpWithEmailAndPasswordFailure(AppLocalizations.of(Get.context!)!.operationNotAllowedException);
       case 'user-disabled':
-        return const SignUpWithEmailAndPasswordFailure('Your account has been disabled. Please contact support for help.');
+        return SignUpWithEmailAndPasswordFailure(AppLocalizations.of(Get.context!)!.userDisabledException);
       default:
-        return const SignUpWithEmailAndPasswordFailure();
+        return SignUpWithEmailAndPasswordFailure(AppLocalizations.of(Get.context!)!.somethingWentWrong);
     }
   }
 }

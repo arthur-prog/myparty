@@ -226,5 +226,57 @@
   "friendRequestSent" : "The friend request has been sent successfully.",
   "@friendRequestSent" : {
     "description" : "The friend request sent"
+  },
+  "mailNotAvailable" : "This email address is already used.",
+  "@mailNotAvailable" : {
+    "description" : "The mail not available"
+  },
+  "emailSent" : "The email has been sent successfully.",
+  "@emailSent" : {
+    "description" : "The email sent"
+  },
+  "weakPasswordException": "Please enter a stronger password.",
+  "@weakPasswordException": {
+    "description": "The weak password exception"
+  },
+  "invalidEmailException": "Please enter a valid email address.",
+  "@invalidEmailException": {
+    "description": "The invalid email exception"
+  },
+  "emailAlreadyInUseException": "An account already exists for this email address.",
+  "@emailAlreadyInUseException": {
+    "description": "The email already in use exception"
+  },
+  "operationNotAllowedException": "Operation not allowed. Please contact support.",
+  "@operationNotAllowedException": {
+    "description": "The operation not allowed exception"
+  },
+  "userDisabledException": "Your account has been disabled. Please contact support for help.",
+  "@userDisabledException": {
+    "description": "The user disabled exception"
+  },
+  "userNotFoundException": "There is no user having this email address.",
+  "@userNotFoundException": {
+    "description": "The user not found exception"
+  },
+  "wrongPasswordException": "The password is invalid.",
+  "@wrongPasswordException": {
+    "description": "The wrong password exception"
+  },
+  "tooManyRequestsException": "Too many attempts to sign in. Please try again later.",
+  "@tooManyRequestsException": {
+    "description": "The too many requests exception"
+  },
+  "invalidCredentialsException": "Invalid credentials. Please try again.",
+  "@invalidCredentialsException": {
+    "description": "The invalid credentials exception"
+  },
+  "accountExistsWithDifferentCredentialException": "An account already exists for this email address.",
+  "@accountExistsWithDifferentCredentialException": {
+    "description": "The account exists with different credential exception"
+  },
+  "invalidActionCodeException": "The action code in the link is malformed, expired, or has already been used. Please try again.",
+  "@invalidActionCodeException": {
+    "description": "The invalid action code exception"
   }
 }

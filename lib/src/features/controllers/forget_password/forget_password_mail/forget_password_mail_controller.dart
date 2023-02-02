@@ -12,6 +12,7 @@ class ForgetPassordMailController extends GetxController{
 
   void sendResetPasswordMail(){
     _authRepo.sendResetPasswordMail(email.text);
+
   }
 
   String? validateEmail(String email, BuildContext context) {

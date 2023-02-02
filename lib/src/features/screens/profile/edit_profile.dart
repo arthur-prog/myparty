@@ -53,6 +53,7 @@ class _EditProfileState extends State<EditProfile> {
               child: FutureBuilder(
                 future: _userRepo.getUserById(_auth.firebaseUser.value!.uid),
                 builder: (context, snapshot) {
+                  print(_auth.firebaseUser.value!.uid);
                   if (snapshot.connectionState == ConnectionState.done) {
                     if (snapshot.hasData) {
                       U.User user = snapshot.data as U.User;
@@ -87,10 +88,19 @@ class _EditProfileState extends State<EditProfile> {
                                                 ),
                                         );
                                       }
-                                      return const CircleAvatar(
-                                        backgroundImage:
-                                            NetworkImage(profilePicture),
-                                        radius: 60.0,
+                                      return Obx(
+                                            () => controller.image.value == null
+                                            ? const CircleAvatar(
+                                          radius: 100,
+                                          backgroundColor: Colors.white,
+                                          backgroundImage: NetworkImage(
+                                              profilePicture),
+                                        )
+                                            : CircleAvatar(
+                                          radius: 100,
+                                          backgroundImage: FileImage(
+                                              controller.image.value!),
+                                        ),
                                       );
                                     }),
                               ),

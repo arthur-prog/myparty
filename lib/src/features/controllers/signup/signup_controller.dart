@@ -16,7 +16,8 @@ class SignUpController extends GetxController{
   final _userRepo = Get.put(UserRepository());
 
   Rx<bool> isPasswordNotVisible = true.obs;
-  Rx<bool> isUsernameAvailable = false.obs;
+  Rx<String> usernameError = ''.obs;
+  Rx<String> mailError = ''.obs;
 
   void registerUser(String email, String password) async {
     AuthenticationRepository.instance.createUserWithEmailandPassword(email, password, username.text);
@@ -38,13 +39,20 @@ class SignUpController extends GetxController{
     return null;
   }
 
-  Future<void> validateUsername() async {
+  Future<void> isUsernameAvailable() async {
     if (!(await _userRepo.isUserNameAvailable(username.text))) {
-      isUsernameAvailable.value = false;
+      usernameError.value = AppLocalizations.of(Get.context!)!.usernameNotAvailable;
     } else {
-      isUsernameAvailable.value = true;
+      usernameError.value = '';
     }
-    print(isUsernameAvailable.value);
+  }
+
+  Future<void> isMailAvailable() async {
+    if (!(await _userRepo.isMailAvailable(email.text))) {
+      mailError.value = AppLocalizations.of(Get.context!)!.mailNotAvailable;
+    } else {
+      mailError.value = '';
+    }
   }
 
   void changePasswordVisibility(){

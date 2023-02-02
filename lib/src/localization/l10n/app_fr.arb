@@ -55,5 +55,18 @@
   "memberSince" : "Membre depuis le",
   "delete" : "Supprimer",
   "updatedAccount" : "Vos informations ont bien été mises à jour.",
-  "friendRequestSent" : "La demande d'ami a bien été envoyée."
+  "friendRequestSent" : "La demande d'ami a bien été envoyée.",
+  "mailNotAvailable" : "Cette adresse mail est déjà utilisée.",
+  "emailSent" : "L'email a bien été envoyé.",
+  "weakPasswordException": "Veuillez entrer un mot de passe plus fort.",
+  "invalidEmailException": "Veuillez entrer une adresse e-mail valide.",
+  "emailAlreadyInUseException": "L'adresse e-mail est déjà utilisée par un autre compte.",
+  "operationNotAllowedException": "Opération non autorisée. Veuillez contacter le support.",
+  "userDisabledException": "Votre compte a été désactivé. Veuillez contacter le support.",
+  "userNotFoundException": "Aucun utilisateur ne correspond à cet adresse e-mail.",
+  "wrongPasswordException": "Le mot de passe est incorrect.",
+  "tooManyRequestsException": "Trop de tentatives de connexion. Veuillez réessayer plus tard.",
+  "invalidCredentialsException": "Informations d'ientification incorrectes. Veuillez réessayer.",
+  "accountExistsWithDifferentCredentialException": "Un compte avec cette adresse e-mail existe déjà.",
+  "invalidActionCodeException": "Le code d'action dans le lien est incorrect, a expiré ou a déjà été utilisé. Veuillez réessayer."
 }
