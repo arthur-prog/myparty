@@ -278,5 +278,25 @@
   "invalidActionCodeException": "The action code in the link is malformed, expired, or has already been used. Please try again.",
   "@invalidActionCodeException": {
     "description": "The invalid action code exception"
+  },
+  "noFriends" : "You don't have any friends yet.",
+  "@noFriends" : {
+      "description" : "The no friends"
+  },
+  "addFriends" : "Add friends",
+  "@addFriends" : {
+    "description" : "The add friends"
+  },
+  "accept" : "Accept",
+  "@accept" : {
+    "description" : "The accept"
+  },
+  "friendRequests" : "Friend Requests",
+  "@friendRequests" : {
+    "description" : "The friend requests"
+  },
+  "noUsers" : "No users found.",
+  "@noUsers" : {
+    "description" : "The no users"
   }
 }

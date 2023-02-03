@@ -1,12 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
+import 'package:my_party/src/common_widgets/profile_line/profile_line_widget.dart';
 
 import 'package:my_party/src/features/Entities/User.dart' as U;
+import 'package:my_party/src/features/controllers/friends/friend_requets_controller.dart';
 import 'package:my_party/src/repository/authentication_repository/authentication_repository.dart';
 import 'package:my_party/src/repository/user_repository/user_repository.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class FriendRequests extends StatefulWidget {
   const FriendRequests({
@@ -19,78 +20,42 @@ class FriendRequests extends StatefulWidget {
 
 class _FriendRequestsState extends State<FriendRequests> {
   final _auth = Get.put(AuthenticationRepository());
-  final _userRepo = Get.put(UserRepository());
+  final controller = Get.put(FriendRequestsController());
 
-  @override
-  Widget build(BuildContext context) {
-    final _user = _auth.firebaseUser.value;
-    return Material(
-      child: SafeArea(
-        child: StreamBuilder(
-            stream: FirebaseFirestore.instance
-                .collection("users/${_user?.uid}/friendRequests")
-                .snapshots(),
-            builder: (context, snapshot) {
-              List<Widget> children = [];
-              if (snapshot.hasData) {
-                if (snapshot.data!.docs.isEmpty) {
-                  children = <Widget>[
-                    Text("no friend requests"),
-                  ];
-                } else {
-                  snapshot.data!.docs.forEach((doc) {
-                    Map<String, dynamic> userJson = doc.data();
-                    U.User user = U.User.fromMap(userJson);
-                    children.add(
-                        // Text(user.firstName)
-                        Row(
-                      children: <Widget>[
-                        Text(user.userName),
-                        TextButton(
-                            onPressed: () async {
-                              if (_user != null) {
-                                final U.User? thisUser =
-                                    await _userRepo.getUserById(_user.uid);
-
-                                await _userRepo.addFriend(user, thisUser!);
-                                await _userRepo.addBackFriend(user, thisUser);
-                                await _userRepo.deleteFriendRequest(user, thisUser);
-                              } else {
-                                throw Exception("User is null");
-                              }
-                            },
-                            child: Text("Accept")),
-                        TextButton(
-                            onPressed: () async {
-                              if (_user != null) {
-                                final U.User? thisUser =
-                                    await _userRepo.getUserById(_user.uid);
-                                await _userRepo.deleteFriendRequest(user, thisUser!);
-                              } else {
-                                throw Exception("User is null");
-                              }
-                            },
-                            child: Text("Delete"))
-                      ],
-                    ));
-                  });
-                }
-              } else {
-                children = <Widget>[
-                  SpinKitFadingCube(
-                    color: Theme.of(context).primaryColor,
-                    size: 80.0,
-                  ),
-                ];
+    @override
+    Widget build(BuildContext context) {
+      final _user = _auth.firebaseUser.value;
+      return StreamBuilder(
+          stream: FirebaseFirestore.instance
+              .collection("users/${_user?.uid}/friendRequests")
+              .snapshots(),
+          builder: (context, snapshot) {
+            List<Widget> children = [];
+            if (snapshot.hasData) {
+              if (snapshot.data!.docs.isNotEmpty) {
+                children.add(const Divider());
+                children.add(Text(
+                  AppLocalizations.of(context)!.friendRequests,
+                  style: Theme.of(context).textTheme.headline4,
+                ));
+                children.add(const SizedBox(height: 10));
+                snapshot.data!.docs.forEach((doc) {
+                  Map<String, dynamic> userJson = doc.data();
+                  U.User user = U.User.fromMap(userJson);
+                  children.add(ProfileLineWidget(
+                    user: user,
+                    buttonTitle: AppLocalizations.of(context)!.accept,
+                    buttonOnPressed: () => controller.acceptFriendRequest(user, _user!),
+                    icon: Icons.delete_outlined,
+                    iconOnPressed: () => controller.deleteFriendRequest(user, _user!),
+                  ));
+                });
+                children.add(const Divider());
               }
-              return Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: children,
-                ),
-              );
-            }),
-      ),
-    );
+            }
+            return Column(
+              children: children,
+            );
+          });
+    }
   }
-}

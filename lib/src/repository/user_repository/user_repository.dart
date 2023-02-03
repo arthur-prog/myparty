@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:my_party/src/common_widgets/snackbar/snackbar_information_widget.dart';
 import 'package:my_party/src/features/Entities/User.dart' as U;
@@ -142,6 +141,48 @@ class UserRepository extends GetxController {
       user = U.User.fromMap(userJson);
     }
     return user;
+  }
+
+  Future<List<U.User>> getUsersStartsByUsername(String username) async {
+    List<U.User> users = [];
+    QuerySnapshot<Object?> query = await _usersCollection.where('userName', isGreaterThanOrEqualTo: username).get();
+    if (query.docs.isNotEmpty) {
+      for (var user in query.docs) {
+        final userJson = user.data() as Map<String, dynamic>;
+        users.add(U.User.fromMap(userJson));
+      }
+    }
+    return users;
+  }
+
+  Future<List<String>> getFriendsId(String userId) async {
+    List<String> friendsId = [];
+    final userDoc = FirebaseFirestore.instance.doc('users/$userId');
+    final friendsCollection = userDoc.collection('friends');
+
+    QuerySnapshot<Object?> query = await friendsCollection.get();
+    if (query.docs.isNotEmpty) {
+      for (var friend in query.docs) {
+        final friendJson = friend.data() as Map<String, dynamic>;
+        friendsId.add(friendJson['userId']);
+      }
+    }
+    return friendsId;
+  }
+
+  Future<List<String>> getFriendRequestsId(String userId) async {
+    List<String> friendsRequestsId = [];
+    final userDoc = FirebaseFirestore.instance.doc('users/$userId');
+    final friendsRequestsCollection = userDoc.collection('friendRequests');
+
+    QuerySnapshot<Object?> query = await friendsRequestsCollection.get();
+    if (query.docs.isNotEmpty) {
+      for (var friend in query.docs) {
+        final friendJson = friend.data() as Map<String, dynamic>;
+        friendsRequestsId.add(friendJson['userId']);
+      }
+    }
+    return friendsRequestsId;
   }
 
   Future<U.User?> getUserById(String userId) async {

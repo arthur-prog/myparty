@@ -62,11 +62,14 @@ class _ProfileState extends State<Profile> {
                         future: _userRepo.getProfilPicture(_user?.uid ?? ""),
                         builder: (BuildContext context,
                             AsyncSnapshot<String> snapshot) {
-                          if (snapshot.hasData) {
-                            return CircleAvatar(
-                              backgroundImage: NetworkImage(snapshot.data!),
-                              radius: 60.0,
-                            );
+                          if (snapshot.connectionState ==
+                              ConnectionState.done){
+                            if (snapshot.hasData) {
+                              return CircleAvatar(
+                                backgroundImage: NetworkImage(snapshot.data!),
+                                radius: 60.0,
+                              );
+                            }
                           }
                           return const CircleAvatar(
                             backgroundImage: NetworkImage(profilePicture),

@@ -8,7 +8,7 @@ import 'package:my_party/src/constants/image_strings.dart';
 import 'package:my_party/src/features/Entities/User.dart' as U;
 import 'package:image_picker/image_picker.dart';
 
-import 'package:my_party/src/common_widgets/re_usable_select_photo_button.dart';
+import 'package:my_party/src/common_widgets/select_photo/select_photo_button.dart';
 import 'package:my_party/src/features/controllers/profile/edit_profile_controller.dart';
 import 'package:my_party/src/repository/authentication_repository/authentication_repository.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';

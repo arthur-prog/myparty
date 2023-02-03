@@ -68,5 +68,10 @@
   "tooManyRequestsException": "Trop de tentatives de connexion. Veuillez réessayer plus tard.",
   "invalidCredentialsException": "Informations d'ientification incorrectes. Veuillez réessayer.",
   "accountExistsWithDifferentCredentialException": "Un compte avec cette adresse e-mail existe déjà.",
-  "invalidActionCodeException": "Le code d'action dans le lien est incorrect, a expiré ou a déjà été utilisé. Veuillez réessayer."
+  "invalidActionCodeException": "Le code d'action dans le lien est incorrect, a expiré ou a déjà été utilisé. Veuillez réessayer.",
+  "noFriends" : "Vous n'avez pas encore d'amis.",
+  "addFriends" : "Ajouter des amis",
+  "accept" : "Accepter",
+  "friendRequests" : "Demandes d'ami",
+  "noUsers" : "Aucun utilisateur trouvé."
 }
