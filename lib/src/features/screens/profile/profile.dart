@@ -44,7 +44,10 @@ class _ProfileState extends State<Profile> {
               onPressed: () {
                 AuthenticationRepository.instance.logOut();
               },
-              icon: const Icon(Icons.logout)),
+              icon: Icon(
+                Icons.logout,
+                color: isDark ? lightColor : darkColor,
+              )),
         ],
       ),
       body: SingleChildScrollView(
@@ -63,7 +66,7 @@ class _ProfileState extends State<Profile> {
                         builder: (BuildContext context,
                             AsyncSnapshot<String> snapshot) {
                           if (snapshot.connectionState ==
-                              ConnectionState.done){
+                              ConnectionState.done) {
                             if (snapshot.hasData) {
                               return CircleAvatar(
                                 backgroundImage: NetworkImage(snapshot.data!),
@@ -98,7 +101,8 @@ class _ProfileState extends State<Profile> {
               const SizedBox(height: 10),
               FutureBuilder(
                 future: _userRepo.getUserById(_user!.uid),
-                builder: (BuildContext context, AsyncSnapshot<U.User?> snapshot) {
+                builder:
+                    (BuildContext context, AsyncSnapshot<U.User?> snapshot) {
                   if (snapshot.hasData) {
                     U.User user = snapshot.data!;
                     return Column(
@@ -113,19 +117,21 @@ class _ProfileState extends State<Profile> {
                         ),
                         user.firstName != "" && user.lastName != ""
                             ? Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
                                     user.firstName!,
-                                    style: Theme.of(context).textTheme.bodyText2,
+                                    style:
+                                        Theme.of(context).textTheme.bodyText2,
                                   ),
-                                const SizedBox(width: 8),
-                                Text(
-                                  user.lastName!,
-                                  style: Theme.of(context).textTheme.bodyText2,
-                                ),
-                              ],
-                            )
+                                  const SizedBox(width: 8),
+                                  Text(
+                                    user.lastName!,
+                                    style:
+                                        Theme.of(context).textTheme.bodyText2,
+                                  ),
+                                ],
+                              )
                             : const SizedBox(),
                       ],
                     );

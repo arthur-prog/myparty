@@ -103,7 +103,7 @@
   "@forgetPasswordTitle": {
     "description": "The forget password title"
   },
-  "forgetPasswordSubTitle": "Select one of the options below to reset your password.",
+  "forgetPasswordSubTitle": "Select one of the options below to reset your password",
   "@forgetPasswordSubTitle": {
     "description": "The forget password sub title"
   },
@@ -298,5 +298,21 @@
   "noUsers" : "No users found.",
   "@noUsers" : {
     "description" : "The no users"
+  },
+  "selectPhotoTitle": "Make selection",
+  "@selectPhotoTitle": {
+    "description": "The select photo title"
+  },
+  "selectPhotoSubTitle": "Select one of the options below to change your profile picture",
+  "@selectPhotoSubTitle": {
+    "description": "The select photo sub title"
+  },
+  "galleryTitle": "Browse gallery",
+  "@galleryTitle": {
+    "description": "The gallery title"
+  },
+  "cameraTitle": "Use camera",
+  "@cameraTitle": {
+    "description": "The camera title"
   }
 }

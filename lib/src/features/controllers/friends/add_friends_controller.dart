@@ -94,28 +94,25 @@ class AddFriendsController extends GetxController {
       List<String> friendsId,
       List<String> friendRequestsId) {
     List<Widget> children = [];
+
     children.add(
       Text(
         AppLocalizations.of(context)!.addFriends,
         style: Theme.of(context).textTheme.headline4,
       ),
     );
+
     children.add(const SizedBox(height: 10.0));
     children.add(const Divider());
+
     users.forEach((user) {
       if (user.userId != thisFireUser.uid) {
         // don't show yourself
         if (!friendsId.contains(user.userId)) {
-          // check if friends
+          // check if user is in friends
           if (!friendRequestsId.contains(user.userId)) {
             // check if user is in my friendRequests
             children.add(futureBuilderHisFriendRequests(user, thisFireUser));
-            children.add(const Divider());
-          } else {
-            children.add(ProfileLineWidget(
-              user: user,
-              icon: Icons.check,
-            ));
             children.add(const Divider());
           }
         }

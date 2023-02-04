@@ -8,8 +8,9 @@ import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:my_party/src/features/Entities/User.dart' as U;
+import 'package:my_party/src/common_widgets/modal_bottom_sheet/modal_btn_widget.dart';
 import 'package:my_party/src/features/screens/home/home_screen.dart';
-import 'package:my_party/src/features/screens/profile/profile.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:my_party/src/repository/user_repository/user_repository.dart';
 
 class EditProfileController extends GetxController {
@@ -38,6 +39,53 @@ class EditProfileController extends GetxController {
     } else {
       print("Date is not selected");
     }
+  }
+
+  Future buildShowModalBottomSheet(){
+    return showModalBottomSheet(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        context: Get.context!,
+        builder: (context) => Container(
+          height: MediaQuery.of(context).size.height * 0.4,
+          padding: const EdgeInsets.all(30),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                AppLocalizations.of(context)!.selectPhotoTitle,
+                style: Theme.of(context).textTheme.headline2,
+              ),
+              Text(
+                AppLocalizations.of(context)!.selectPhotoSubTitle,
+                style: Theme.of(context).textTheme.bodyText2,
+              ),
+              const SizedBox(
+                height: 30,
+              ),
+              ModalBtnWidget(
+                icon: Icons.image,
+                iconSize: 40,
+                title: AppLocalizations.of(context)!.galleryTitle,
+                onTap: () {
+                  Navigator.pop(context);
+                  pickImage(ImageSource.gallery);
+                },
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              ModalBtnWidget(
+                icon: Icons.camera_alt_outlined,
+                iconSize: 40,
+                title: AppLocalizations.of(context)!.cameraTitle,
+                onTap: () {
+                  Navigator.pop(context);
+                  pickImage(ImageSource.camera);
+                },
+              ),
+            ],
+          ),
+        ));
   }
 
   Future<void> pickImage(ImageSource source) async {

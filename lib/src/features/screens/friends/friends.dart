@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:my_party/src/common_widgets/profile_line/profile_line_widget.dart';
+import 'package:my_party/src/constants/colors.dart';
 import 'package:my_party/src/constants/image_strings.dart';
 
 import 'package:my_party/src/features/Entities/User.dart' as U;
@@ -31,6 +32,7 @@ class _FriendsState extends State<Friends> {
     final controller = Get.put(FriendsController());
     final _auth = Get.put(AuthenticationRepository());
     final _user = _auth.firebaseUser.value;
+    bool isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Material(
       child: SafeArea(
@@ -43,12 +45,17 @@ class _FriendsState extends State<Friends> {
                 AppLocalizations.of(context)!.friends,
                 style: Theme.of(context).textTheme.headline2,
               ),
+              leading: IconButton(
+                  onPressed: () {
+                    Get.back();
+                  },
+                  icon: Icon(Icons.arrow_back, size: 30, color: isDark ? lightColor : darkColor,)),
               actions: [
                 IconButton(
                     onPressed: () {
                       Get.to(() => const AddFriend());
                     },
-                    icon: const Icon(Icons.add, size: 30,)),
+                    icon: Icon(Icons.add, size: 30, color: isDark ? lightColor : darkColor,)),
               ]
           ),
           body: Padding(

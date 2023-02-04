@@ -1,16 +1,20 @@
 import 'package:flutter/material.dart';
 
-class ForgetPasswordBtnWidget extends StatelessWidget {
-  ForgetPasswordBtnWidget({
+class ModalBtnWidget extends StatelessWidget {
+  ModalBtnWidget({
     Key? key,
     required this.icon,
     required this.title,
-    required this.subTitle, required this.onTap,
+    this.subTitle,
+    required this.onTap,
+    this.iconSize = 60,
   }) : super(key: key);
 
   final IconData icon;
-  final String title, subTitle;
+  final String title;
+  String? subTitle;
   final VoidCallback onTap;
+  final double iconSize;
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +35,7 @@ class ForgetPasswordBtnWidget extends StatelessWidget {
           children: [
             Icon(
               icon,
-              size: 60,
+              size: iconSize,
             ),
             const SizedBox(
               width: 10,
@@ -43,10 +47,11 @@ class ForgetPasswordBtnWidget extends StatelessWidget {
                   title,
                   style: Theme.of(context).textTheme.headline6,
                 ),
-                Text(
-                  subTitle,
-                  style: Theme.of(context).textTheme.bodyText2,
-                )
+                if(subTitle != null)
+                  Text(
+                    subTitle!,
+                    style: Theme.of(context).textTheme.bodyText2,
+                  )
               ],
             ),
           ],

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:my_party/src/common_widgets/profile_line/profile_line_widget.dart';
+import 'package:my_party/src/constants/colors.dart';
 import 'package:my_party/src/features/Entities/User.dart' as U;
 import 'package:my_party/src/features/controllers/friends/add_friends_controller.dart';
 import 'package:my_party/src/features/screens/friends/friend_requests.dart';
@@ -42,12 +43,19 @@ class _AddFriendState extends State<AddFriend> {
   @override
   Widget build(BuildContext context) {
     final thisFireUser = _auth.firebaseUser.value;
+    bool isDark = Theme.of(context).brightness == Brightness.dark;
+
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Theme.of(context).canvasColor,
           centerTitle: true,
           elevation: 0,
+          leading: IconButton(
+              onPressed: () {
+                Get.back();
+              },
+              icon: Icon(Icons.arrow_back, size: 30, color: isDark ? lightColor : darkColor,)),
           title: Text(
             AppLocalizations.of(context)!.addFriends,
             style: Theme.of(context).textTheme.headline2,

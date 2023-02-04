@@ -37,7 +37,7 @@ class _EditProfileState extends State<EditProfile> {
         elevation: 0,
         leading: IconButton(
           onPressed: () => Get.back(),
-          icon: const Icon(LineAwesomeIcons.angle_left),
+          icon: Icon(Icons.arrow_back, size: 30, color: isDark ? lightColor : darkColor,),
         ),
         title: Text(
           AppLocalizations.of(context)!.editProfile,
@@ -65,8 +65,8 @@ class _EditProfileState extends State<EditProfile> {
                           Stack(
                             children: [
                               SizedBox(
-                                width: 150,
-                                height: 150,
+                                width: 200,
+                                height: 200,
                                 child: FutureBuilder<String>(
                                     future: _userRepo
                                         .getProfilPicture(_user?.uid ?? ""),
@@ -89,18 +89,18 @@ class _EditProfileState extends State<EditProfile> {
                                         );
                                       }
                                       return Obx(
-                                            () => controller.image.value == null
+                                        () => controller.image.value == null
                                             ? const CircleAvatar(
-                                          radius: 100,
-                                          backgroundColor: Colors.white,
-                                          backgroundImage: NetworkImage(
-                                              profilePicture),
-                                        )
+                                                radius: 100,
+                                                backgroundColor: Colors.white,
+                                                backgroundImage: NetworkImage(
+                                                    profilePicture),
+                                              )
                                             : CircleAvatar(
-                                          radius: 100,
-                                          backgroundImage: FileImage(
-                                              controller.image.value!),
-                                        ),
+                                                radius: 100,
+                                                backgroundImage: FileImage(
+                                                    controller.image.value!),
+                                              ),
                                       );
                                     }),
                               ),
@@ -108,42 +108,33 @@ class _EditProfileState extends State<EditProfile> {
                                 bottom: 0,
                                 right: 0,
                                 child: Container(
-                                  width: 35,
-                                  height: 35,
+                                  width: 45,
+                                  height: 45,
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(100),
                                       color: primaryColor),
-                                  child: Icon(
-                                    LineAwesomeIcons.camera,
-                                    color: isDark ? darkColor : lightColor,
-                                    size: 20,
+                                  child: IconButton(
+                                    onPressed: () {
+                                      controller.buildShowModalBottomSheet();
+                                    },
+                                    icon: Icon(
+                                      LineAwesomeIcons.camera,
+                                      color: isDark ? darkColor : lightColor,
+                                      size: 25,
+                                    ),
                                   ),
                                 ),
                               )
                             ],
                           ),
-                          const SizedBox(height: 30),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              SelectPhoto(
-                                  onTap: () {
-                                    controller.pickImage(ImageSource.gallery);
-                                  },
-                                  icon: Icons.image,
-                                  textLabel: 'Browse Gallery',
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.4),
-                              const SizedBox(width: 10),
-                              SelectPhoto(
-                                onTap: () {
-                                  controller.pickImage(ImageSource.camera);
-                                },
-                                icon: Icons.camera_alt_outlined,
-                                textLabel: 'Use a Camera',
-                                width: MediaQuery.of(context).size.width * 0.4,
-                              ),
-                            ],
+                          const SizedBox(height: 20),
+                          Text(
+                            user.userName,
+                            style: Theme.of(context).textTheme.headline2,
+                          ),
+                          Text(
+                            user.email,
+                            style: Theme.of(context).textTheme.bodyText2,
                           ),
                           const SizedBox(height: 20),
                           const Divider(),

@@ -73,5 +73,9 @@
   "addFriends" : "Ajouter des amis",
   "accept" : "Accepter",
   "friendRequests" : "Demandes d'ami",
-  "noUsers" : "Aucun utilisateur trouvé."
+  "noUsers" : "Aucun utilisateur trouvé.",
+  "selectPhotoTitle": "Faites un choix",
+  "selectPhotoSubTitle": "Sélectionner une des méthodes ci-dessous pour changer votre photo de profil",
+  "galleryTitle": "Parcourir la galerie",
+  "cameraTitle": "Utiliser l'appareil photo"
 }
