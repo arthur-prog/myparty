@@ -314,5 +314,37 @@
   "cameraTitle": "Use camera",
   "@cameraTitle": {
     "description": "The camera title"
+  },
+  "createdParty": "Your party has been created successfully.",
+  "@createdParty": {
+      "description": "The created party"
+  },
+  "createParty": "Create Party",
+  "@createParty": {
+      "description": "The create party"
+  },
+  "name": "Name",
+  "@name": {
+      "description": "The name"
+  },
+  "inviteFriends": "Invite Friends",
+  "@inviteFriends": {
+      "description": "The invite friends"
+  },
+  "location": "Location",
+  "@location": {
+      "description": "The location"
+  },
+  "date": "Date",
+  "@date": {
+      "description": "The date"
+  },
+  "addGuest": "Invite",
+  "@addGuest": {
+      "description": "The add guest"
+  },
+  "nameRequired" : "Name is required",
+  "@nameRequired" : {
+      "description" : "The name required"
   }
 }

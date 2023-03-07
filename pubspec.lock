@@ -17,6 +17,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.12"
+  address_search_field:
+    dependency: "direct main"
+    description:
+      name: address_search_field
+      sha256: "505bd19f7d9a864c879a8ed72b275aa01a086b87a4a21244d27bfd6c4499931c"
+      url: "https://pub.dev"
+    source: hosted
+    version: "5.0.3"
   analyzer:
     dependency: transitive
     description:
@@ -257,6 +265,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.0.11"
+  dio:
+    dependency: transitive
+    description:
+      name: dio
+      sha256: "7d328c4d898a61efc3cd93655a0955858e29a0aa647f0f9e02d59b3bb275e2e8"
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.0.6"
   email_validator:
     dependency: "direct main"
     description:
@@ -423,7 +439,7 @@ packages:
     source: sdk
     version: "0.0.0"
   flutter_config:
-    dependency: "direct main"
+    dependency: "direct dev"
     description:
       name: flutter_config
       sha256: "8e2be2d560a52e06d2ef53a31913a11fc80ef708a442571c96194fd32e29fb1a"
@@ -475,6 +491,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.0"
+  flutter_riverpod:
+    dependency: transitive
+    description:
+      name: flutter_riverpod
+      sha256: d84e180f039a6b963e610d2e4435641fdfe8f12437e8770e963632e05af16d80
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.4"
   flutter_spinkit:
     dependency: "direct main"
     description:
@@ -517,6 +541,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.2.0"
+  geocoding:
+    dependency: "direct main"
+    description:
+      name: geocoding
+      sha256: "26218460a902d4249b81e6baf9d55ce400fd1ebe6fc0a7e92b2c12b0b8e1e14e"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.5"
+  geocoding_platform_interface:
+    dependency: transitive
+    description:
+      name: geocoding_platform_interface
+      sha256: "8848605d307d844d89937cdb4b8ad7dfa880552078f310fa24d8a460f6dddab4"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.1"
   geolocator:
     dependency: "direct main"
     description:
@@ -1061,6 +1101,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.1.0"
+  riverpod:
+    dependency: transitive
+    description:
+      name: riverpod
+      sha256: e7f097159b9512f5953ff544164c19057f45ce28fd0cb971fc4cad1f7b28217d
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.3"
   shelf:
     dependency: transitive
     description:
@@ -1122,6 +1170,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.11.0"
+  state_notifier:
+    dependency: transitive
+    description:
+      name: state_notifier
+      sha256: "8fe42610f179b843b12371e40db58c9444f8757f8b69d181c97e50787caed289"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.7.2+1"
   stream_channel:
     dependency: transitive
     description:

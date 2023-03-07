@@ -1,33 +1,26 @@
-import 'dart:async';
+import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:my_party/src/features/Entities/Party.dart';
-import 'package:my_party/src/features/screens/party/add_party.dart';
+import 'package:my_party/src/features/screens/party/add_party/add_party_screen.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:my_party/src/repository/authentication_repository/authentication_repository.dart';
+import 'package:my_party/src/features/screens/party/party_widget.dart';
 
-class PartyScreen extends StatefulWidget {
+class PartyScreen extends StatelessWidget {
   PartyScreen({
     Key? key,
   }) : super(key: key);
 
   User? user = FirebaseAuth.instance.currentUser;
 
-  @override
-  State<PartyScreen> createState() => _PartyScreenState();
-}
-
-class _PartyScreenState extends State<PartyScreen> {
-
   FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Container(
+      child: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
@@ -38,13 +31,13 @@ class _PartyScreenState extends State<PartyScreen> {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => AddParty(user: widget.user!,)),
+                  MaterialPageRoute(builder: (context) => AddParty()),
                 );
               },
             ),
 
             StreamBuilder(
-                stream: FirebaseFirestore.instance.collection("partys").where('userId', isEqualTo: widget.user!.uid).snapshots(),
+                stream: FirebaseFirestore.instance.collection("partys").where('userId', isEqualTo: user!.uid).snapshots(),
                 builder: (context, snapshot) {
                   List<Widget> children = [];
                   if (snapshot.hasData) {
@@ -57,18 +50,7 @@ class _PartyScreenState extends State<PartyScreen> {
                         Map<String, dynamic> partyJson = doc.data();
                         Party party = Party.fromMap(partyJson);
                         children.add(
-                            Row(
-                              children: <Widget>[
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text(party.name),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text(party.userId),
-                                )
-                              ],
-                            )
+                            PartyWidget(party: party)
                         );
                       });
                     }
@@ -88,12 +70,12 @@ class _PartyScreenState extends State<PartyScreen> {
                   );
                 }
             ),
-            SizedBox(height: 100),
-            Center(
+            const SizedBox(height: 100),
+            const Center(
               child: Text("Guested Parties"),
             ),
             StreamBuilder(
-                stream: FirebaseFirestore.instance.collection("partys").where('userId', isEqualTo: widget.user!.uid).snapshots(),
+                stream: FirebaseFirestore.instance.collection("partys").where('userId', isEqualTo: user!.uid).snapshots(),
                 builder: (context, snapshot) {
                   List<Widget> children = [];
                   if (snapshot.hasData) {
@@ -106,18 +88,7 @@ class _PartyScreenState extends State<PartyScreen> {
                         Map<String, dynamic> partyJson = doc.data();
                         Party party = Party.fromMap(partyJson);
                         children.add(
-                            Row(
-                              children: <Widget>[
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text(party.name),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text(party.userId),
-                                )
-                              ],
-                            )
+                            PartyWidget(party: party)
                         );
                       });
                     }

@@ -170,6 +170,21 @@ class UserRepository extends GetxController {
     return friendsId;
   }
 
+  Future<List<U.User>> getFriends(String userId) async {
+    List<U.User> friends = [];
+    final userDoc = FirebaseFirestore.instance.doc('users/$userId');
+    final friendsCollection = userDoc.collection('friends');
+
+    QuerySnapshot<Object?> query = await friendsCollection.get();
+    if (query.docs.isNotEmpty) {
+      for (var friend in query.docs) {
+        final friendJson = friend.data() as Map<String, dynamic>;
+        friends.add(U.User.fromMap(friendJson));
+      }
+    }
+    return friends;
+  }
+
   Future<List<String>> getFriendRequestsId(String userId) async {
     List<String> friendsRequestsId = [];
     final userDoc = FirebaseFirestore.instance.doc('users/$userId');

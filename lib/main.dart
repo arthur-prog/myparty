@@ -13,7 +13,8 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   ).then((value) => Get.put(AuthenticationRepository()));
-  runApp(App());
+  await FlutterConfig.loadEnvVariables();
+  runApp(const App());
 }
 
 class App extends StatelessWidget {

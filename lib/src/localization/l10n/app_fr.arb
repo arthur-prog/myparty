@@ -77,5 +77,13 @@
   "selectPhotoTitle": "Faites un choix",
   "selectPhotoSubTitle": "Sélectionner une des méthodes ci-dessous pour changer votre photo de profil",
   "galleryTitle": "Parcourir la galerie",
-  "cameraTitle": "Utiliser l'appareil photo"
+  "cameraTitle": "Utiliser l'appareil photo",
+  "createdParty": "Votre soirée a bien été créée",
+  "createParty": "Créer une soirée",
+  "name": "Nom",
+  "inviteFriends": "Inviter des amis",
+  "location": "Emplacement",
+  "date": "Date",
+  "addGuest": "Inviter",
+  "nameRequired" : "Le nom est obligatoire"
 }

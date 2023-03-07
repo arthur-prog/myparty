@@ -23,7 +23,6 @@ class ProfileLineWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(buttonTitle);
     final _userRepo = Get.put(UserRepository());
     return Row(
       children: <Widget>[
